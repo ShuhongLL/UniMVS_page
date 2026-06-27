@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UniMVS: Unified Spatial Perception from Heterogeneous Multi-Camera Arrays</title>
+<meta name="description" content="UniMVS — a single feed-forward model that recovers metric 3D space, depth, and pose from arbitrary heterogeneous multi-camera rigs." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+
+<!-- animated background layers -->
+<div class="bg-aurora" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">◈</span>
+      <span class="brand-name">UniMVS</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#overview">Overview</a>
+      <a href="#abilities">Abilities</a>
+      <a href="#demo">Demo</a>
+      <a href="#comparison">Comparison</a>
+      <a href="#citation">Citation</a>
+    </nav>
+    <a class="nav-cta" href="#demo">Try Demo</a>
+    <button class="nav-burger" aria-label="Toggle menu" id="burger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="overview">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container">
+      <h1 class="hero-title reveal">
+        <span class="grad-text">UniMVS</span><br />
+        Unified Spatial Perception from<br class="br-d" /> Heterogeneous Multi-Camera Arrays
+      </h1>
+
+      <ul class="authors reveal">
+        <li><a href="#">Lin Jia</a><sup>1,2</sup></li>
+        <li><a href="#">Aria Vance</a><sup>1</sup></li>
+        <li><a href="#">Kenji Mori</a><sup>2</sup></li>
+        <li><a href="#">Sofia Renn</a><sup>3</sup></li>
+        <li><a href="#">Wei Lu</a><sup>1</sup></li>
+        <li><a href="#">Elena Park</a><sup>2,*</sup></li>
+      </ul>
+      <p class="affil reveal"><sup>1</sup>Spatial Intelligence Lab&ensp; <sup>2</sup>University of Tokyo&ensp; <sup>3</sup>Helix Research&ensp; <sup>*</sup>Project Lead</p>
+
+      <div class="hero-links reveal">
+        <a class="pill primary" href="#"><svg viewBox="0 0 24 24" class="ic"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/></svg> Tech Report</a>
+        <a class="pill" href="#"><span class="mono">arXiv</span> 2606.01234</a>
+        <a class="pill" href="#demo"><svg viewBox="0 0 24 24" class="ic"><path d="M8 5v14l11-7z"/></svg> Live Demo</a>
+        <a class="pill" href="#"><svg viewBox="0 0 24 24" class="ic"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 20 4.8 4.9 4.9 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A4.9 4.9 0 0 0 5 4.8a5.2 5.2 0 0 0-1.4 3.7c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 0 0-1 2.6V22"/></svg> Code</a>
+        <a class="pill" href="#demo"><svg viewBox="0 0 24 24" class="ic"><path d="M3 5h18v14H3z"/><path d="M3 9h18M9 5v14"/></svg> Gallery</a>
+      </div>
+
+      <p class="tldr reveal">
+        <span class="tldr-tag">TL;DR</span>
+        A single feed-forward transformer that ingests images from <em>any</em> mix of cameras —
+        wide-angle, fisheye, telephoto, even rolling-shutter event sensors — and recovers a
+        metric, globally-consistent 3D space with depth, pose, and dense geometry in one pass.
+      </p>
+    </div>
+
+    <!-- hero showcase video (mock) -->
+    <div class="container">
+      <figure class="hero-media reveal">
+        <div class="media-frame" data-mock-video="Spatial reconstruction reel">
+          <div class="media-scene scene-orbit"></div>
+          <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          <span class="media-tag">0:42 · Teaser reel</span>
+        </div>
+        <figcaption>Real-time fusion of 6 heterogeneous views into one metric point map. <em>(placeholder)</em></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== ABSTRACT ===================== -->
+  <section class="section" id="abstract">
+    <div class="container narrow">
+      <div class="kicker reveal">Abstract</div>
+      <h2 class="section-title reveal">One model, any camera rig, one coherent space.</h2>
+      <p class="lead reveal">
+        Modern robots and capture stages mix sensors with wildly different optics, resolutions, and
+        shutters. Prior pipelines treat each modality separately and stitch results with brittle
+        calibration. <strong>UniMVS</strong> replaces that stack with a single geometry-grounded
+        transformer. Trained on 14M heterogeneous frames, it predicts a shared latent space token that
+        decodes simultaneously into depth, camera pose, and a dense metric point map — no per-rig
+        calibration required.
+      </p>
+      <p class="reveal">
+        Across eight benchmarks, UniMVS improves point-map accuracy by <strong>34.7%</strong> and
+        pose estimation by <strong>29.1%</strong> over the strongest baselines, while running
+        <strong>2.6×</strong> faster. The same checkpoint generalizes from drone swarms to surgical
+        endoscopes without fine-tuning.
+      </p>
+
+      <figure class="teaser reveal">
+        <div class="chart-card">
+          <div class="chart-head">
+            <span>Accuracy vs. Latency — higher & left is better</span>
+            <span class="chart-legend"><i class="dot ours"></i> UniMVS <i class="dot base"></i> Baselines</span>
+          </div>
+          <svg class="chart" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="50" y1="260" x2="580" y2="260" class="axis"/>
+            <line x1="50" y1="20" x2="50" y2="260" class="axis"/>
+            <circle cx="120" cy="200" r="9" class="pt base"/>
+            <circle cx="210" cy="170" r="9" class="pt base"/>
+            <circle cx="300" cy="150" r="9" class="pt base"/>
+            <circle cx="380" cy="120" r="9" class="pt base"/>
+            <circle cx="160" cy="70" r="14" class="pt ours"/>
+            <text x="180" y="64" class="lbl">UniMVS</text>
+          </svg>
+        </div>
+        <figcaption>Pareto frontier on the HetBench-8 suite. <em>(mock figure)</em></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== ABILITIES ===================== -->
+  <section class="section" id="abilities">
+    <div class="container">
+      <div class="kicker reveal">Abilities</div>
+      <h2 class="section-title reveal">Four capabilities, zero retraining.</h2>
+
+      <div class="ability">
+        <div class="ability-text reveal">
+          <span class="ability-num">01</span>
+          <h3>Video Reconstruction</h3>
+          <p>Turn an unposed monocular clip into a temporally stable, metric 3D scan. UniMVS tracks
+            geometry frame-to-frame and fuses it into a single drift-free mesh.</p>
+        </div>
+        <div class="ability-media reveal">
+          <div class="media-frame small" data-mock-video="Video → mesh">
+            <div class="media-scene scene-flow"></div>
+            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ability reverse">
+        <div class="ability-text reveal">
+          <span class="ability-num">02</span>
+          <h3>SLAM for Large-Scale Scenes</h3>
+          <p>Drop-in front-end for kilometer-scale mapping. Loop closures emerge from the shared latent
+            space, so global consistency holds even across day–night and sensor changes.</p>
+        </div>
+        <div class="ability-media reveal">
+          <div class="media-frame small" data-mock-video="City-scale SLAM">
+            <div class="media-scene scene-slam"></div>
+            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ability">
+        <div class="ability-text reveal">
+          <span class="ability-num">03</span>
+          <h3>Feed-Forward 3D Gaussians</h3>
+          <p>Predict a full 3D Gaussian splat in a single forward pass — no per-scene optimization. Render
+            novel views at 120 FPS straight from heterogeneous inputs.</p>
+        </div>
+        <div class="ability-media reveal">
+          <div class="media-frame small" data-mock-video="Feed-forward splats">
+            <div class="media-scene scene-splat"></div>
+            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ability reverse">
+        <div class="ability-text reveal">
+          <span class="ability-num">04</span>
+          <h3>Spatial Perception, Many Cameras</h3>
+          <p>Fuse a rig of mismatched sensors — fisheye, tele, thermal — into one calibrated metric world.
+            Auto-resolves extrinsics on the fly, even as cameras are added or removed.</p>
+        </div>
+        <div class="ability-media reveal">
+          <div class="media-frame small" data-mock-video="Multi-cam fusion">
+            <div class="media-scene scene-multicam"></div>
+            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEMO / GALLERY ===================== -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="kicker reveal">Interactive Demo</div>
+      <h2 class="section-title reveal">Explore reconstructions.</h2>
+      <p class="lead reveal">Pick a scene to load its interactive point map. <em>(thumbnails are placeholders)</em></p>
+
+      <div class="gallery reveal" id="gallery"></div>
+
+      <div class="viewer reveal" id="viewer">
+        <div class="viewer-stage">
+          <div class="media-scene scene-orbit" id="viewerScene"></div>
+          <div class="viewer-hud">
+            <span id="viewerName">The Colosseum</span>
+            <span class="mono" id="viewerMeta">6 views · 1.2M points</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARISON ===================== -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="kicker reveal">Comparison</div>
+      <h2 class="section-title reveal">State of the art across the board.</h2>
+
+      <div class="compare-slider reveal" id="slider">
+        <div class="compare-img before"><span class="compare-label">Baseline</span></div>
+        <div class="compare-img after" id="afterPane"><span class="compare-label">UniMVS</span></div>
+        <div class="compare-handle" id="handle"><span></span></div>
+        <input type="range" min="0" max="100" value="50" id="sliderRange" aria-label="Comparison slider" />
+      </div>
+
+      <div class="table-wrap reveal">
+        <table class="bench">
+          <thead>
+            <tr><th>Method</th><th>Point-Map ↑</th><th>Pose AUC ↑</th><th>Depth δ&lt;1.25 ↑</th><th>FPS ↑</th><th>Calib-free</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>COLMAP++</td><td>61.2</td><td>54.8</td><td>0.812</td><td>0.4</td><td class="no">✕</td></tr>
+            <tr><td>DUSt-Net</td><td>68.9</td><td>63.1</td><td>0.857</td><td>6.1</td><td class="no">✕</td></tr>
+            <tr><td>MonoGeo-XL</td><td>72.4</td><td>67.7</td><td>0.879</td><td>9.3</td><td class="yes">✓</td></tr>
+            <tr><td>FuseFormer</td><td>75.0</td><td>70.2</td><td>0.901</td><td>11.0</td><td class="yes">✓</td></tr>
+            <tr class="ours"><td>UniMVS <span class="tag-ours">Ours</span></td><td>89.7</td><td>88.4</td><td>0.954</td><td>28.6</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+        <p class="table-note">Results on HetBench-8. Best in <span class="grad-text">gradient</span>. <em>(mock numbers)</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CITATION ===================== -->
+  <section class="section" id="citation">
+    <div class="container narrow">
+      <div class="kicker reveal">Citation</div>
+      <h2 class="section-title reveal">BibTeX</h2>
+      <div class="bibtex reveal">
+        <button class="copy-btn" id="copyBib">Copy</button>
+        <pre id="bibText">@inproceedings{jia2026unimvs,
+  title     = {UniMVS: Unified Spatial Perception from
+               Heterogeneous Multi-Camera Arrays},
+  author    = {Jia, Lin and Vance, Aria and Mori, Kenji and
+               Renn, Sofia and Lu, Wei and Park, Elena},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026},
+}</pre>
+      </div>
+      <div class="ack reveal">
+        <h3>Acknowledgement</h3>
+        <p>We thank the Spatial Intelligence Lab for compute and the anonymous reviewers for
+          their feedback. This page is an original design mock; all names, numbers, and media
+          are placeholders.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="brand"><span class="brand-mark">◈</span> UniMVS</span>
+    <span class="footer-copy">© 2026 UniMVS. Design mock — all content placeholder.</span>
+    <a href="#top" class="to-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
