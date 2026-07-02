@@ -53,64 +53,50 @@
     revObs.observe(el);
   });
 
-  /* ---------- cursor glow (desktop only) ---------- */
-  const glow = document.querySelector(".cursor-glow");
-  if (window.matchMedia("(pointer:fine)").matches) {
-    window.addEventListener("mousemove", (e) => {
-      glow.style.opacity = "1";
-      glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
-    });
-  }
+  /* ---------- hero video switcher ---------- */
+  const heroVideo = document.getElementById("heroVideo");
+  const heroVideoFrame = heroVideo && heroVideo.closest(".hero-video-frame");
+  const heroVideoToggle = document.getElementById("heroVideoToggle");
+  const heroVideoTag = document.getElementById("heroVideoTag");
+  const heroVideoSwitcher = document.getElementById("heroVideoSwitcher");
 
-  /* ---------- gallery (mock scenes) ---------- */
-  const scenes = ["scene-orbit", "scene-splat", "scene-slam", "scene-flow"];
-  const items = [
-    ["The Colosseum", "6 views", "1.2M pts"],
-    ["DTU · Scan 24", "49 views", "3.4M pts"],
-    ["Tokyo Crossing", "video", "rolling"],
-    ["Endoscope Run", "stereo", "metric"],
-    ["Drone Swarm", "8 cams", "city"],
-    ["Studio Capture", "fisheye×4", "0.8M pts"],
-    ["Forest Trail", "video", "2.1M pts"],
-    ["Warehouse SLAM", "12 views", "loop"],
-    ["Thermal + RGB", "hetero", "fused"],
-    ["Ancient Ruins", "32 views", "5.0M pts"],
-    ["Indoor Apt", "rgbd", "metric"],
-    ["Night Street", "low-light", "1.5M pts"],
-  ];
-  const gallery = document.getElementById("gallery");
-  const viewerScene = document.getElementById("viewerScene");
-  const viewerName = document.getElementById("viewerName");
-  const viewerMeta = document.getElementById("viewerMeta");
-
-  items.forEach(([name, a, b], i) => {
-    const tile = document.createElement("button");
-    tile.className = "gtile" + (i === 0 ? " active" : "");
-    tile.innerHTML = `
-      <div class="media-scene ${scenes[i % scenes.length]}"></div>
-      <span class="gtile-badge">${a}</span>
-      <span class="gtile-name">${name}</span>`;
-    tile.addEventListener("click", () => {
-      gallery.querySelectorAll(".gtile").forEach((t) => t.classList.remove("active"));
-      tile.classList.add("active");
-      viewerScene.className = "media-scene " + scenes[i % scenes.length];
-      viewerName.textContent = name;
-      viewerMeta.textContent = `${a} · ${b}`;
-    });
-    gallery.appendChild(tile);
-  });
-
-  /* ---------- comparison slider ---------- */
-  const range = document.getElementById("sliderRange");
-  const after = document.getElementById("afterPane");
-  const handle = document.getElementById("handle");
-  if (range) {
-    const apply = (v) => {
-      after.style.clipPath = `inset(0 0 0 ${v}%)`;
-      handle.style.left = v + "%";
+  if (heroVideo && heroVideoFrame && heroVideoToggle && heroVideoSwitcher) {
+    const setPausedState = () => {
+      const paused = heroVideo.paused;
+      heroVideoFrame.classList.toggle("paused", paused);
+      heroVideoToggle.setAttribute("aria-label", paused ? "Play video" : "Pause video");
     };
-    range.addEventListener("input", (e) => apply(e.target.value));
-    apply(50);
+
+    const playSelectedVideo = () => {
+      const playPromise = heroVideo.play();
+      if (playPromise) playPromise.catch(setPausedState);
+    };
+
+    heroVideoToggle.addEventListener("click", () => {
+      if (heroVideo.paused) {
+        playSelectedVideo();
+      } else {
+        heroVideo.pause();
+      }
+    });
+
+    heroVideoSwitcher.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.classList.contains("active")) return;
+        heroVideoSwitcher.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+        button.classList.add("active");
+        heroVideo.src = button.dataset.src;
+        heroVideo.load();
+        if (heroVideoTag) heroVideoTag.textContent = button.dataset.label;
+        playSelectedVideo();
+      });
+    });
+
+    heroVideo.addEventListener("play", setPausedState);
+    heroVideo.addEventListener("pause", setPausedState);
+    heroVideo.addEventListener("loadedmetadata", setPausedState);
+    setPausedState();
+    playSelectedVideo();
   }
 
   /* ---------- copy bibtex ---------- */
@@ -137,18 +123,4 @@
     });
   }
 
-  /* ---------- mock play buttons ---------- */
-  document.querySelectorAll(".play").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const tag = this.parentElement.querySelector(".media-tag");
-      if (tag) tag.textContent = "▶ playing… (placeholder)";
-      this.style.opacity = "0";
-      this.style.pointerEvents = "none";
-      setTimeout(() => {
-        this.style.opacity = "1";
-        this.style.pointerEvents = "auto";
-        if (tag) tag.textContent = "0:42 · Teaser reel";
-      }, 2400);
-    });
-  });
 })();

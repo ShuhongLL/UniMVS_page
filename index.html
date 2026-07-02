@@ -75,15 +75,53 @@
       </p>
     </div>
 
-    <!-- hero showcase video (mock) -->
+    <!-- hero showcase videos -->
     <div class="container">
       <figure class="hero-media reveal">
-        <div class="media-frame" data-mock-video="Spatial reconstruction reel">
-          <div class="media-scene scene-orbit"></div>
-          <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-          <span class="media-tag">0:42 · Teaser reel</span>
+        <div class="media-frame hero-video-frame">
+          <video
+            class="hero-video"
+            id="heroVideo"
+            src="assets/videos/home_000_lite_allframes_topview_clip_conf8_nolabel_720p_h264_10mb.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+          <button class="play hero-video-toggle" id="heroVideoToggle" aria-label="Pause video" type="button">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+          </button>
+          <span class="media-tag" id="heroVideoTag">Home · Reconstruction</span>
         </div>
-        <figcaption>Real-time fusion of 6 heterogeneous views into one metric point map. <em>(placeholder)</em></figcaption>
+        <div class="video-switcher" id="heroVideoSwitcher" aria-label="Select hero video">
+          <button type="button" class="active" data-src="assets/videos/home_000_lite_allframes_topview_clip_conf8_nolabel_720p_h264_10mb.mp4" data-label="Home · Reconstruction">
+            <img src="assets/images/thumbs/home_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Home</span>
+          </button>
+          <button type="button" data-src="assets/videos/temple_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp.mp4" data-label="Temple · Top View">
+            <img src="assets/images/thumbs/temple_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Temple</span>
+          </button>
+          <button type="button" data-src="assets/videos/102_AsianArch_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp.mp4" data-label="Asian Arch · Top View">
+            <img src="assets/images/thumbs/asianarch_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Asian Arch</span>
+          </button>
+          <button type="button" data-src="assets/videos/AsianVillage_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp.mp4" data-label="Asian Village · Top View">
+            <img src="assets/images/thumbs/asianvillage_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Asian Village</span>
+          </button>
+          <button type="button" data-src="assets/videos/112_Bunker_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp_2x.mp4" data-label="Bunker · Top View">
+            <img src="assets/images/thumbs/bunker_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Bunker</span>
+          </button>
+          <button type="button" data-src="assets/videos/kujiale_0004_lite_allframes_topview_clip_conf8_nolabel_720p_h264_rightsharp_2x.mp4" data-label="Kujiale · Top View">
+            <img src="assets/images/thumbs/kujiale_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Kujiale</span>
+          </button>
+        </div>
+        <figcaption>Switch between six reconstruction clips from the local video set.</figcaption>
       </figure>
     </div>
   </section>
@@ -143,12 +181,6 @@
           <p>Turn an unposed monocular clip into a temporally stable, metric 3D scan. UniMVS tracks
             geometry frame-to-frame and fuses it into a single drift-free mesh.</p>
         </div>
-        <div class="ability-media reveal">
-          <div class="media-frame small" data-mock-video="Video → mesh">
-            <div class="media-scene scene-flow"></div>
-            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-          </div>
-        </div>
       </div>
 
       <div class="ability reverse">
@@ -157,12 +189,6 @@
           <h3>SLAM for Large-Scale Scenes</h3>
           <p>Drop-in front-end for kilometer-scale mapping. Loop closures emerge from the shared latent
             space, so global consistency holds even across day–night and sensor changes.</p>
-        </div>
-        <div class="ability-media reveal">
-          <div class="media-frame small" data-mock-video="City-scale SLAM">
-            <div class="media-scene scene-slam"></div>
-            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-          </div>
         </div>
       </div>
 
@@ -173,12 +199,6 @@
           <p>Predict a full 3D Gaussian splat in a single forward pass — no per-scene optimization. Render
             novel views at 120 FPS straight from heterogeneous inputs.</p>
         </div>
-        <div class="ability-media reveal">
-          <div class="media-frame small" data-mock-video="Feed-forward splats">
-            <div class="media-scene scene-splat"></div>
-            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-          </div>
-        </div>
       </div>
 
       <div class="ability reverse">
@@ -188,34 +208,16 @@
           <p>Fuse a rig of mismatched sensors — fisheye, tele, thermal — into one calibrated metric world.
             Auto-resolves extrinsics on the fly, even as cameras are added or removed.</p>
         </div>
-        <div class="ability-media reveal">
-          <div class="media-frame small" data-mock-video="Multi-cam fusion">
-            <div class="media-scene scene-multicam"></div>
-            <button class="play" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== DEMO / GALLERY ===================== -->
+  <!-- ===================== DEMO ===================== -->
   <section class="section" id="demo">
-    <div class="container">
+    <div class="container narrow">
       <div class="kicker reveal">Interactive Demo</div>
-      <h2 class="section-title reveal">Explore reconstructions.</h2>
-      <p class="lead reveal">Pick a scene to load its interactive point map. <em>(thumbnails are placeholders)</em></p>
-
-      <div class="gallery reveal" id="gallery"></div>
-
-      <div class="viewer reveal" id="viewer">
-        <div class="viewer-stage">
-          <div class="media-scene scene-orbit" id="viewerScene"></div>
-          <div class="viewer-hud">
-            <span id="viewerName">The Colosseum</span>
-            <span class="mono" id="viewerMeta">6 views · 1.2M points</span>
-          </div>
-        </div>
-      </div>
+      <h2 class="section-title reveal">Explore reconstructions in the video reel.</h2>
+      <p class="lead reveal">Use the video selector in the hero section to switch between the five local reconstruction clips.</p>
     </div>
   </section>
 
@@ -225,11 +227,70 @@
       <div class="kicker reveal">Comparison</div>
       <h2 class="section-title reveal">State of the art across the board.</h2>
 
-      <div class="compare-slider reveal" id="slider">
-        <div class="compare-img before"><span class="compare-label">Baseline</span></div>
-        <div class="compare-img after" id="afterPane"><span class="compare-label">UniMVS</span></div>
-        <div class="compare-handle" id="handle"><span></span></div>
-        <input type="range" min="0" max="100" value="50" id="sliderRange" aria-label="Comparison slider" />
+      <h3 class="compare-title reveal">Fisheye</h3>
+      <div class="compare-grid reveal" aria-label="Fisheye comparison results">
+        <div class="compare-head">RGB Input</div>
+        <div class="compare-head">DAC</div>
+        <div class="compare-head">UniDAC</div>
+        <div class="compare-head ours">Ours</div>
+
+        <img src="assets/images/compare/rgb_fisheye_1.jpg" alt="RGB input comparison 1" loading="lazy" />
+        <img src="assets/images/compare/dac_fisheye_1.jpg" alt="DAC baseline comparison 1" loading="lazy" />
+        <img src="assets/images/compare/unidac_fisheye_1.jpg" alt="UniDAC baseline comparison 1" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_fisheye_1.jpg" alt="Ours comparison 1" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_fisheye_2.jpg" alt="RGB input comparison 2" loading="lazy" />
+        <img src="assets/images/compare/dac_fisheye_2.jpg" alt="DAC baseline comparison 2" loading="lazy" />
+        <img src="assets/images/compare/unidac_fisheye_2.jpg" alt="UniDAC baseline comparison 2" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_fisheye_2.jpg" alt="Ours comparison 2" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_fisheye_3.jpg" alt="RGB input comparison 3" loading="lazy" />
+        <img src="assets/images/compare/dac_fisheye_3.jpg" alt="DAC baseline comparison 3" loading="lazy" />
+        <img src="assets/images/compare/unidac_fisheye_3.jpg" alt="UniDAC baseline comparison 3" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_fisheye_3.jpg" alt="Ours comparison 3" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_fisheye_4.jpg" alt="RGB input comparison 4" loading="lazy" />
+        <img src="assets/images/compare/dac_fisheye_4.jpg" alt="DAC baseline comparison 4" loading="lazy" />
+        <img src="assets/images/compare/unidac_fisheye_4.jpg" alt="UniDAC baseline comparison 4" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_fisheye_4.jpg" alt="Ours comparison 4" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_fisheye_5.jpg" alt="RGB input comparison 5" loading="lazy" />
+        <img src="assets/images/compare/dac_fisheye_5.jpg" alt="DAC baseline comparison 5" loading="lazy" />
+        <img src="assets/images/compare/unidac_fisheye_5.jpg" alt="UniDAC baseline comparison 5" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_fisheye_5.jpg" alt="Ours comparison 5" loading="lazy" />
+      </div>
+
+      <h3 class="compare-title reveal">Pinhole</h3>
+      <div class="compare-grid reveal" aria-label="Pinhole comparison results">
+        <div class="compare-head">RGB Input</div>
+        <div class="compare-head">DepthAnything3-Small</div>
+        <div class="compare-head">VGGT-Omega</div>
+        <div class="compare-head ours">Ours</div>
+
+        <img src="assets/images/compare/rgb_pinhole_1.jpg" alt="RGB input pinhole comparison 1" loading="lazy" />
+        <img src="assets/images/compare/da3s_pinhole_1.png" alt="DA3S baseline pinhole comparison 1" loading="lazy" />
+        <img src="assets/images/compare/vggto_pinhole_1.png" alt="VGGT-O baseline pinhole comparison 1" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_pinhole_1.png" alt="Ours pinhole comparison 1" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_pinhole_2.jpg" alt="RGB input pinhole comparison 2" loading="lazy" />
+        <img src="assets/images/compare/da3s_pinhole_2.png" alt="DA3S baseline pinhole comparison 2" loading="lazy" />
+        <img src="assets/images/compare/vggto_pinhole_2.png" alt="VGGT-O baseline pinhole comparison 2" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_pinhole_2.png" alt="Ours pinhole comparison 2" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_pinhole_3.jpg" alt="RGB input pinhole comparison 3" loading="lazy" />
+        <img src="assets/images/compare/da3s_pinhole_3.png" alt="DA3S baseline pinhole comparison 3" loading="lazy" />
+        <img src="assets/images/compare/vggto_pinhole_3.png" alt="VGGT-O baseline pinhole comparison 3" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_pinhole_3.png" alt="Ours pinhole comparison 3" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_pinhole_4.jpg" alt="RGB input pinhole comparison 4" loading="lazy" />
+        <img src="assets/images/compare/da3s_pinhole_4.png" alt="DA3S baseline pinhole comparison 4" loading="lazy" />
+        <img src="assets/images/compare/vggto_pinhole_4.png" alt="VGGT-O baseline pinhole comparison 4" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_pinhole_4.png" alt="Ours pinhole comparison 4" loading="lazy" />
+
+        <img src="assets/images/compare/rgb_pinhole_5.jpg" alt="RGB input pinhole comparison 5" loading="lazy" />
+        <img src="assets/images/compare/da3s_pinhole_5.png" alt="DA3S baseline pinhole comparison 5" loading="lazy" />
+        <img src="assets/images/compare/vggto_pinhole_5.png" alt="VGGT-O baseline pinhole comparison 5" loading="lazy" />
+        <img class="ours-img" src="assets/images/compare/ours_pinhole_5.png" alt="Ours pinhole comparison 5" loading="lazy" />
       </div>
 
       <div class="table-wrap reveal">
