@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>UniMVS: Unified Spatial Perception from Heterogeneous Multi-Camera Arrays</title>
-<meta name="description" content="UniMVS — a single feed-forward model that recovers metric 3D space, depth, and pose from arbitrary heterogeneous multi-camera rigs." />
+<title>X-Lens: Real-Time Metric Depth Estimation with Heterogeneous Cameras</title>
+<meta name="description" content="X-Lens — real-time metric depth estimation with heterogeneous cameras." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -24,7 +24,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">
       <span class="brand-mark">◈</span>
-      <span class="brand-name">UniMVS</span>
+      <span class="brand-name">X-Lens</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#overview">Overview</a>
@@ -45,8 +45,8 @@
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container">
       <h1 class="hero-title reveal">
-        <span class="grad-text">UniMVS</span><br />
-        Unified Spatial Perception from<br class="br-d" /> Heterogeneous Multi-Camera Arrays
+        <span class="grad-text">X-Lens</span><br />
+        Real-Time Metric Depth Estimation<br class="br-d" /> with Heterogeneous Cameras
       </h1>
 
       <ul class="authors reveal">
@@ -134,13 +134,13 @@
       <p class="lead reveal">
         Modern robots and capture stages mix sensors with wildly different optics, resolutions, and
         shutters. Prior pipelines treat each modality separately and stitch results with brittle
-        calibration. <strong>UniMVS</strong> replaces that stack with a single geometry-grounded
+        calibration. <strong>X-Lens</strong> replaces that stack with a single geometry-grounded
         transformer. Trained on 14M heterogeneous frames, it predicts a shared latent space token that
         decodes simultaneously into depth, camera pose, and a dense metric point map — no per-rig
         calibration required.
       </p>
       <p class="reveal">
-        Across eight benchmarks, UniMVS improves point-map accuracy by <strong>34.7%</strong> and
+        Across eight benchmarks, X-Lens improves point-map accuracy by <strong>34.7%</strong> and
         pose estimation by <strong>29.1%</strong> over the strongest baselines, while running
         <strong>2.6×</strong> faster. The same checkpoint generalizes from drone swarms to surgical
         endoscopes without fine-tuning.
@@ -150,7 +150,7 @@
         <div class="chart-card">
           <div class="chart-head">
             <span>Accuracy vs. Latency — higher & left is better</span>
-            <span class="chart-legend"><i class="dot ours"></i> UniMVS <i class="dot base"></i> Baselines</span>
+            <span class="chart-legend"><i class="dot ours"></i> X-Lens <i class="dot base"></i> Baselines</span>
           </div>
           <svg class="chart" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
             <line x1="50" y1="260" x2="580" y2="260" class="axis"/>
@@ -160,7 +160,7 @@
             <circle cx="300" cy="150" r="9" class="pt base"/>
             <circle cx="380" cy="120" r="9" class="pt base"/>
             <circle cx="160" cy="70" r="14" class="pt ours"/>
-            <text x="180" y="64" class="lbl">UniMVS</text>
+            <text x="180" y="64" class="lbl">X-Lens</text>
           </svg>
         </div>
         <figcaption>Pareto frontier on the HetBench-8 suite. <em>(mock figure)</em></figcaption>
@@ -178,7 +178,7 @@
         <div class="ability-text reveal">
           <span class="ability-num">01</span>
           <h3>Video Reconstruction</h3>
-          <p>Turn an unposed monocular clip into a temporally stable, metric 3D scan. UniMVS tracks
+          <p>Turn an unposed monocular clip into a temporally stable, metric 3D scan. X-Lens tracks
             geometry frame-to-frame and fuses it into a single drift-free mesh.</p>
         </div>
       </div>
@@ -293,6 +293,23 @@
         <img class="ours-img" src="assets/images/compare/ours_pinhole_5.png" alt="Ours pinhole comparison 5" loading="lazy" />
       </div>
 
+      <div class="pointcloud-showcase reveal" id="pointcloudShowcase">
+        <div class="pointcloud-head">
+          <h3 class="compare-title">Interactive Point Cloud</h3>
+          <span class="pointcloud-name" id="pointcloudName">Point Cloud 1</span>
+        </div>
+        <div class="pointcloud-viewer" id="pointcloudViewer">
+          <canvas id="pointcloudCanvas" aria-label="Interactive point cloud viewer"></canvas>
+          <button class="pointcloud-arrow prev" id="pointcloudPrev" type="button" aria-label="Previous point cloud">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="pointcloud-arrow next" id="pointcloudNext" type="button" aria-label="Next point cloud">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="pointcloud-status" id="pointcloudStatus">Loading point cloud…</div>
+        </div>
+      </div>
+
       <div class="table-wrap reveal">
         <table class="bench">
           <thead>
@@ -303,10 +320,25 @@
             <tr><td>DUSt-Net</td><td>68.9</td><td>63.1</td><td>0.857</td><td>6.1</td><td class="no">✕</td></tr>
             <tr><td>MonoGeo-XL</td><td>72.4</td><td>67.7</td><td>0.879</td><td>9.3</td><td class="yes">✓</td></tr>
             <tr><td>FuseFormer</td><td>75.0</td><td>70.2</td><td>0.901</td><td>11.0</td><td class="yes">✓</td></tr>
-            <tr class="ours"><td>UniMVS <span class="tag-ours">Ours</span></td><td>89.7</td><td>88.4</td><td>0.954</td><td>28.6</td><td class="yes">✓</td></tr>
+            <tr class="ours"><td>X-Lens <span class="tag-ours">Ours</span></td><td>89.7</td><td>88.4</td><td>0.954</td><td>28.6</td><td class="yes">✓</td></tr>
           </tbody>
         </table>
         <p class="table-note">Results on HetBench-8. Best in <span class="grad-text">gradient</span>. <em>(mock numbers)</em></p>
+      </div>
+
+      <div class="vla-showcase reveal">
+        <h3 class="compare-title">Vision-Action Demo</h3>
+        <p class="vla-copy">Depth estimation integrated into a Vision-Action model.</p>
+        <div class="vla-grid">
+          <div class="vla-video">
+            <video src="assets/videos/VLA-1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            <span>Speed x1</span>
+          </div>
+          <div class="vla-video">
+            <video src="assets/videos/VLA-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            <span>Speed x1</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -318,9 +350,9 @@
       <h2 class="section-title reveal">BibTeX</h2>
       <div class="bibtex reveal">
         <button class="copy-btn" id="copyBib">Copy</button>
-        <pre id="bibText">@inproceedings{jia2026unimvs,
-  title     = {UniMVS: Unified Spatial Perception from
-               Heterogeneous Multi-Camera Arrays},
+        <pre id="bibText">@inproceedings{xlens2026,
+  title     = {X-Lens: Real-Time Metric Depth Estimation
+               with Heterogeneous Cameras},
   author    = {Jia, Lin and Vance, Aria and Mori, Kenji and
                Renn, Sofia and Lu, Wei and Park, Elena},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
@@ -340,12 +372,13 @@
 <!-- ===================== FOOTER ===================== -->
 <footer class="footer">
   <div class="container footer-inner">
-    <span class="brand"><span class="brand-mark">◈</span> UniMVS</span>
-    <span class="footer-copy">© 2026 UniMVS. Design mock — all content placeholder.</span>
+    <span class="brand"><span class="brand-mark">◈</span> X-Lens</span>
+    <span class="footer-copy">© 2026 X-Lens. Design mock — all content placeholder.</span>
     <a href="#top" class="to-top">Back to top ↑</a>
   </div>
 </footer>
 
 <script src="script.js"></script>
+<script type="module" src="pointcloud-viewer.js"></script>
 </body>
 </html>
