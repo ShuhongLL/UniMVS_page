@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>X-Lens: Real-Time Metric Depth Estimation with Heterogeneous Cameras</title>
-<meta name="description" content="X-Lens — real-time metric depth estimation with heterogeneous cameras." />
+<meta name="description" content="X-Lens: real-time metric depth estimation with heterogeneous cameras." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css?v=12" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 </head>
 <body>
@@ -28,11 +28,14 @@
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#overview">Overview</a>
-      <a href="#abilities">Abilities</a>
-      <a href="#demo">Demo</a>
+      <a href="#abstract">Abstract</a>
+      <a href="#dataset">Dataset</a>
       <a href="#comparison">Comparison</a>
+      <a href="#interactive">Demo</a>
+      <a href="#vla">VA</a>
       <a href="#citation">Citation</a>
     </nav>
+    <img class="nav-logo" src="assets/images/drobotics_logo.png" alt="D-Robotics" />
     <a class="nav-cta" href="#demo">Try Demo</a>
     <button class="nav-burger" aria-label="Toggle menu" id="burger"><span></span><span></span><span></span></button>
   </div>
@@ -50,39 +53,43 @@
       </h1>
 
       <ul class="authors reveal">
-        <li><a href="#">Lin Jia</a><sup>1,2</sup></li>
-        <li><a href="#">Aria Vance</a><sup>1</sup></li>
-        <li><a href="#">Kenji Mori</a><sup>2</sup></li>
-        <li><a href="#">Sofia Renn</a><sup>3</sup></li>
-        <li><a href="#">Wei Lu</a><sup>1</sup></li>
-        <li><a href="#">Elena Park</a><sup>2,*</sup></li>
+        <li><a href="#">Heng Zhou</a><sup>1,*</sup></li>
+        <li><a href="https://shuhongll.github.io/">Shuhong Liu</a><sup>1,2,*</sup></li>
+        <li><a href="#">Yonghao He</a><sup>1</sup></li>
+        <li><a href="#">Bohao Zhang</a><sup>1</sup></li>
+        <li><a href="#">Fa Fu</a><sup>1</sup></li>
+        <li><a href="#">Chenhui Hou</a><sup>1</sup></li>
+        <li><a href="#">Xianbao Hou</a><sup>1,3</sup></li>
+        <li><a href="#">Lijun Han</a><sup>1</sup></li>
+        <li><a href="#">Wei Sui</a><sup>1,&dagger;</sup></li>
       </ul>
-      <p class="affil reveal"><sup>1</sup>Spatial Intelligence Lab&ensp; <sup>2</sup>University of Tokyo&ensp; <sup>3</sup>Helix Research&ensp; <sup>*</sup>Project Lead</p>
+      <p class="affil reveal"><sup>1</sup>D-Robotics&ensp; <sup>2</sup>The University of Tokyo&ensp; <sup>3</sup>Soochow University</p>
+      <p class="affil affil-notes reveal"><sup>*</sup>Equal Contribution&ensp; <sup>&dagger;</sup>Project Lead</p>
 
       <div class="hero-links reveal">
         <a class="pill primary" href="#"><svg viewBox="0 0 24 24" class="ic"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/></svg> Tech Report</a>
-        <a class="pill" href="#"><span class="mono">arXiv</span> 2606.01234</a>
+        <a class="pill" href="#"><span class="mono">arXiv</span></a>
         <a class="pill" href="#demo"><svg viewBox="0 0 24 24" class="ic"><path d="M8 5v14l11-7z"/></svg> Live Demo</a>
-        <a class="pill" href="#"><svg viewBox="0 0 24 24" class="ic"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 20 4.8 4.9 4.9 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A4.9 4.9 0 0 0 5 4.8a5.2 5.2 0 0 0-1.4 3.7c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 0 0-1 2.6V22"/></svg> Code</a>
-        <a class="pill" href="#demo"><svg viewBox="0 0 24 24" class="ic"><path d="M3 5h18v14H3z"/><path d="M3 9h18M9 5v14"/></svg> Gallery</a>
+        <a class="pill" href="https://github.com/zhouhengamerica/XLens"><svg viewBox="0 0 24 24" class="ic"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 20 4.8 4.9 4.9 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A4.9 4.9 0 0 0 5 4.8a5.2 5.2 0 0 0-1.4 3.7c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 0 0-1 2.6V22"/></svg> Code</a>
+        <a class="pill" href="https://huggingface.co/datasets/henryzhou998/OmniScene/tree/main">&#129303; Dataset</a>
       </div>
 
       <p class="tldr reveal">
         <span class="tldr-tag">TL;DR</span>
-        A single feed-forward transformer that ingests images from <em>any</em> mix of cameras —
-        wide-angle, fisheye, telephoto, even rolling-shutter event sensors — and recovers a
-        metric, globally-consistent 3D space with depth, pose, and dense geometry in one pass.
+        A compact 0.04B feed-forward model that takes a calibrated mix of <em>fisheye and pinhole</em>
+        views and predicts dense metric depth plus a global scale in one pass, running in real time
+        on six-view heterogeneous rigs.
       </p>
     </div>
 
     <!-- hero showcase videos -->
     <div class="container">
-      <figure class="hero-media reveal">
+      <figure class="hero-media reveal" id="demo">
         <div class="media-frame hero-video-frame">
           <video
             class="hero-video"
             id="heroVideo"
-            src="assets/videos/home_000_lite_allframes_topview_clip_conf8_nolabel_720p_h264_10mb.mp4"
+            src="assets/videos/home000.mp4"
             autoplay
             muted
             loop
@@ -93,35 +100,31 @@
             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
           </button>
-          <span class="media-tag" id="heroVideoTag">Home · Reconstruction</span>
+          <span class="media-tag" id="heroVideoTag">Home</span>
         </div>
         <div class="video-switcher" id="heroVideoSwitcher" aria-label="Select hero video">
-          <button type="button" class="active" data-src="assets/videos/home_000_lite_allframes_topview_clip_conf8_nolabel_720p_h264_10mb.mp4" data-label="Home · Reconstruction">
+          <button type="button" class="active" data-src="assets/videos/home000.mp4" data-label="Home">
             <img src="assets/images/thumbs/home_front_thumb.jpg" alt="" loading="lazy" />
             <span>Home</span>
           </button>
-          <button type="button" data-src="assets/videos/temple_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp.mp4" data-label="Temple · Top View">
-            <img src="assets/images/thumbs/temple_front_thumb.jpg" alt="" loading="lazy" />
-            <span>Temple</span>
-          </button>
-          <button type="button" data-src="assets/videos/102_AsianArch_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp.mp4" data-label="Asian Arch · Top View">
-            <img src="assets/images/thumbs/asianarch_front_thumb.jpg" alt="" loading="lazy" />
-            <span>Asian Arch</span>
-          </button>
-          <button type="button" data-src="assets/videos/AsianVillage_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp.mp4" data-label="Asian Village · Top View">
-            <img src="assets/images/thumbs/asianvillage_front_thumb.jpg" alt="" loading="lazy" />
-            <span>Asian Village</span>
-          </button>
-          <button type="button" data-src="assets/videos/112_Bunker_lite_allframes_topview_noclip_conf8_nolabel_720p_h264_rightsharp_2x.mp4" data-label="Bunker · Top View">
-            <img src="assets/images/thumbs/bunker_front_thumb.jpg" alt="" loading="lazy" />
-            <span>Bunker</span>
-          </button>
-          <button type="button" data-src="assets/videos/kujiale_0004_lite_allframes_topview_clip_conf8_nolabel_720p_h264_rightsharp_2x.mp4" data-label="Kujiale · Top View">
+          <button type="button" data-src="assets/videos/kujiale.mp4" data-label="Kujiale">
             <img src="assets/images/thumbs/kujiale_front_thumb.jpg" alt="" loading="lazy" />
             <span>Kujiale</span>
           </button>
+          <button type="button" data-src="assets/videos/bunker.mp4" data-label="Bunker">
+            <img src="assets/images/thumbs/bunker_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Bunker</span>
+          </button>
+          <button type="button" data-src="assets/videos/asianvillage.mp4" data-label="Asian Village">
+            <img src="assets/images/thumbs/asianvillage_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Asian Village</span>
+          </button>
+          <button type="button" data-src="assets/videos/asianarch.mp4" data-label="Asian Arch">
+            <img src="assets/images/thumbs/asianarch_front_thumb.jpg" alt="" loading="lazy" />
+            <span>Asian Arch</span>
+          </button>
         </div>
-        <figcaption>Switch between six reconstruction clips from the local video set.</figcaption>
+        <figcaption>Metric point-cloud reconstructions from six-view heterogeneous rigs. Left: per-camera RGB and predicted depth. Right: accumulated world-frame point cloud.</figcaption>
       </figure>
     </div>
   </section>
@@ -129,105 +132,47 @@
   <!-- ===================== ABSTRACT ===================== -->
   <section class="section" id="abstract">
     <div class="container narrow">
-      <div class="kicker reveal">Abstract</div>
-      <h2 class="section-title reveal">One model, any camera rig, one coherent space.</h2>
-      <p class="lead reveal">
-        Modern robots and capture stages mix sensors with wildly different optics, resolutions, and
-        shutters. Prior pipelines treat each modality separately and stitch results with brittle
-        calibration. <strong>X-Lens</strong> replaces that stack with a single geometry-grounded
-        transformer. Trained on 14M heterogeneous frames, it predicts a shared latent space token that
-        decodes simultaneously into depth, camera pose, and a dense metric point map — no per-rig
-        calibration required.
-      </p>
-      <p class="reveal">
-        Across eight benchmarks, X-Lens improves point-map accuracy by <strong>34.7%</strong> and
-        pose estimation by <strong>29.1%</strong> over the strongest baselines, while running
-        <strong>2.6×</strong> faster. The same checkpoint generalizes from drone swarms to surgical
-        endoscopes without fine-tuning.
-      </p>
+      <h2 class="section-title reveal">Abstract</h2>
+      <p class="section-sub reveal">One compact model, fisheye and pinhole, one metric space.</p>
+      <div class="abstract-body">
+        <p class="reveal">
+          We present <strong>X-Lens</strong>, a compact feed-forward model for metric depth estimation
+          from a variable number of calibrated fisheye and pinhole views. To meet real-time downstream
+          demands, X-Lens adopts a "simple yet effective" design guided by two core principles. First,
+          two lightweight modules handle heterogeneous cameras: learnable calibration tokens align
+          fisheye and pinhole projective spaces, and a Jacobian-parameterized distortion bias in
+          cross-attention enforces cross-camera consistency, letting a <strong>0.04B</strong> model
+          generalize robustly. Second, X-Lens predicts only depth and a global scale, a minimalist
+          objective that eases convergence.
+        </p>
+        <p class="reveal">
+          To supervise this design, we train X-Lens on multiple public datasets and
+          <strong>OmniScene</strong>, our newly released large-scale synthetic dataset comprising
+          approximately 266K synchronized six-view frames across 103 indoor and outdoor scenes. Without
+          benchmark-specific fine-tuning, X-Lens attains the best reported results on the heterogeneous
+          OmniScene-Full benchmark, lowering metric depth AbsRel by <strong>25.4%</strong> over the
+          strongest baseline while using <strong>88.9%</strong> fewer parameters, and it remains
+          competitive on homogeneous fisheye-only and pinhole-only settings. Furthermore, we integrate
+          X-Lens as a geometry-aware visual encoder into a Vision-Action model, demonstrating its
+          utility for multi-view robotic manipulation.
+        </p>
+      </div>
 
       <figure class="teaser reveal">
-        <div class="chart-card">
-          <div class="chart-head">
-            <span>Accuracy vs. Latency — higher & left is better</span>
-            <span class="chart-legend"><i class="dot ours"></i> X-Lens <i class="dot base"></i> Baselines</span>
-          </div>
-          <svg class="chart" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="50" y1="260" x2="580" y2="260" class="axis"/>
-            <line x1="50" y1="20" x2="50" y2="260" class="axis"/>
-            <circle cx="120" cy="200" r="9" class="pt base"/>
-            <circle cx="210" cy="170" r="9" class="pt base"/>
-            <circle cx="300" cy="150" r="9" class="pt base"/>
-            <circle cx="380" cy="120" r="9" class="pt base"/>
-            <circle cx="160" cy="70" r="14" class="pt ours"/>
-            <text x="180" y="64" class="lbl">X-Lens</text>
-          </svg>
-        </div>
-        <figcaption>Pareto frontier on the HetBench-8 suite. <em>(mock figure)</em></figcaption>
+        <img src="assets/images/teaser_cover.png" alt="X-Lens teaser: metric point clouds from six-view heterogeneous rigs for indoor and outdoor scenes, with RGB inputs and predicted depth maps" loading="lazy" style="width:100%;height:auto;border-radius:12px;" />
+        <figcaption>Metric point clouds projected from calibrated six-view heterogeneous cameras (top), with RGB inputs and predicted depth maps from pinhole and fisheye views (bottom).</figcaption>
       </figure>
     </div>
   </section>
 
-  <!-- ===================== ABILITIES ===================== -->
-  <section class="section" id="abilities">
-    <div class="container">
-      <div class="kicker reveal">Abilities</div>
-      <h2 class="section-title reveal">Four capabilities, zero retraining.</h2>
-
-      <div class="ability">
-        <div class="ability-text reveal">
-          <span class="ability-num">01</span>
-          <h3>Video Reconstruction</h3>
-          <p>Turn an unposed monocular clip into a temporally stable, metric 3D scan. X-Lens tracks
-            geometry frame-to-frame and fuses it into a single drift-free mesh.</p>
-        </div>
-      </div>
-
-      <div class="ability reverse">
-        <div class="ability-text reveal">
-          <span class="ability-num">02</span>
-          <h3>SLAM for Large-Scale Scenes</h3>
-          <p>Drop-in front-end for kilometer-scale mapping. Loop closures emerge from the shared latent
-            space, so global consistency holds even across day–night and sensor changes.</p>
-        </div>
-      </div>
-
-      <div class="ability">
-        <div class="ability-text reveal">
-          <span class="ability-num">03</span>
-          <h3>Feed-Forward 3D Gaussians</h3>
-          <p>Predict a full 3D Gaussian splat in a single forward pass — no per-scene optimization. Render
-            novel views at 120 FPS straight from heterogeneous inputs.</p>
-        </div>
-      </div>
-
-      <div class="ability reverse">
-        <div class="ability-text reveal">
-          <span class="ability-num">04</span>
-          <h3>Spatial Perception, Many Cameras</h3>
-          <p>Fuse a rig of mismatched sensors — fisheye, tele, thermal — into one calibrated metric world.
-            Auto-resolves extrinsics on the fly, even as cameras are added or removed.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== DEMO ===================== -->
-  <section class="section" id="demo">
-    <div class="container narrow">
-      <div class="kicker reveal">Interactive Demo</div>
-      <h2 class="section-title reveal">Explore reconstructions in the video reel.</h2>
-      <p class="lead reveal">Use the video selector in the hero section to switch between the five local reconstruction clips.</p>
-    </div>
-  </section>
 
   <!-- ===================== COMPARISON ===================== -->
   <section class="section" id="comparison">
     <div class="container">
-      <div class="kicker reveal">Comparison</div>
-      <h2 class="section-title reveal">State of the art across the board.</h2>
+      <h2 class="section-title reveal">Comparison</h2>
+      <p class="section-sub reveal">State of the art across the board. Qualitative comparisons on two real captures: a surround rig with four fisheye cameras, and a rig with six pinhole cameras.</p>
 
-      <h3 class="compare-title reveal">Fisheye</h3>
+      <h3 class="compare-title reveal">Fisheye · Real 4-camera rig</h3>
       <div class="compare-grid reveal" aria-label="Fisheye comparison results">
         <div class="compare-head">RGB Input</div>
         <div class="compare-head">DAC</div>
@@ -260,7 +205,7 @@
         <img class="ours-img" src="assets/images/compare/ours_fisheye_5.jpg" alt="Ours comparison 5" loading="lazy" />
       </div>
 
-      <h3 class="compare-title reveal">Pinhole</h3>
+      <h3 class="compare-title reveal">Pinhole · Real 6-camera rig</h3>
       <div class="compare-grid reveal" aria-label="Pinhole comparison results">
         <div class="compare-head">RGB Input</div>
         <div class="compare-head">DepthAnything3-Small</div>
@@ -293,42 +238,106 @@
         <img class="ours-img" src="assets/images/compare/ours_pinhole_5.png" alt="Ours pinhole comparison 5" loading="lazy" />
       </div>
 
-      <div class="pointcloud-showcase reveal" id="pointcloudShowcase">
-        <div class="pointcloud-head">
-          <h3 class="compare-title">Interactive Point Cloud</h3>
-          <span class="pointcloud-name" id="pointcloudName">Point Cloud 1</span>
-        </div>
-        <div class="pointcloud-viewer" id="pointcloudViewer">
-          <canvas id="pointcloudCanvas" aria-label="Interactive point cloud viewer"></canvas>
-          <button class="pointcloud-arrow prev" id="pointcloudPrev" type="button" aria-label="Previous point cloud">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button class="pointcloud-arrow next" id="pointcloudNext" type="button" aria-label="Next point cloud">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
-          <div class="pointcloud-status" id="pointcloudStatus">Loading point cloud…</div>
-        </div>
-      </div>
-
       <div class="table-wrap reveal">
         <table class="bench">
           <thead>
-            <tr><th>Method</th><th>Point-Map ↑</th><th>Pose AUC ↑</th><th>Depth δ&lt;1.25 ↑</th><th>FPS ↑</th><th>Calib-free</th></tr>
+            <tr><th>Method</th><th>Params ↓</th><th>Scale AbsRel ↓</th><th>AbsRel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>τ₁.₀₃ ↑</th><th>FPS ↑</th></tr>
           </thead>
           <tbody>
-            <tr><td>COLMAP++</td><td>61.2</td><td>54.8</td><td>0.812</td><td>0.4</td><td class="no">✕</td></tr>
-            <tr><td>DUSt-Net</td><td>68.9</td><td>63.1</td><td>0.857</td><td>6.1</td><td class="no">✕</td></tr>
-            <tr><td>MonoGeo-XL</td><td>72.4</td><td>67.7</td><td>0.879</td><td>9.3</td><td class="yes">✓</td></tr>
-            <tr><td>FuseFormer</td><td>75.0</td><td>70.2</td><td>0.901</td><td>11.0</td><td class="yes">✓</td></tr>
-            <tr class="ours"><td>X-Lens <span class="tag-ours">Ours</span></td><td>89.7</td><td>88.4</td><td>0.954</td><td>28.6</td><td class="yes">✓</td></tr>
+            <tr><td>MapAnything</td><td>1.23B</td><td>0.3701</td><td>0.1746</td><td>2.1834</td><td>0.7357</td><td>0.1647</td><td>5</td></tr>
+            <tr><td>DepthAnyCamera</td><td>0.06B</td><td>0.2571</td><td>0.2066</td><td>2.3981</td><td>0.7653</td><td>0.2411</td><td>1</td></tr>
+            <tr><td>UniDAC</td><td>0.36B</td><td>0.2506</td><td>0.1368</td><td>2.6125</td><td>0.8156</td><td>0.2511</td><td>1</td></tr>
+            <tr class="ours"><td>X-Lens <span class="tag-ours">Ours</span></td><td>0.04B</td><td>0.1181</td><td>0.1021</td><td>1.5993</td><td>0.8982</td><td>0.3724</td><td>22</td></tr>
           </tbody>
         </table>
-        <p class="table-note">Results on HetBench-8. Best in <span class="grad-text">gradient</span>. <em>(mock numbers)</em></p>
+        <p class="table-note">Heterogeneous-camera evaluation on OmniScene-Full with six input views (4 fisheye + 2 pinhole). FPS measured at 504&times;798. Best in <span class="grad-text">gradient</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTERACTIVE DEMO ===================== -->
+  <section class="section" id="interactive">
+    <div class="container">
+      <h2 class="section-title reveal">Interactive Demo</h2>
+      <p class="section-sub reveal">Drag to orbit fused metric point clouds predicted by X-Lens, from real 4-fisheye captures and six-camera heterogeneous scenes. Use the <strong>Measure</strong> button to click any two points and read out their true metric distance in meters, and <strong>Crop</strong> to box-select and remove regions such as the ceiling. The strip below shows the RGB inputs behind each cloud.</p>
+
+      <div class="pointcloud-showcase reveal" id="pointcloudShowcase">
+        <div class="pointcloud-head">
+          <h3 class="compare-title">Point Cloud Viewer</h3>
+          <div class="pc-measure-ui">
+            <button class="pc-measure-btn" id="pcMeasureBtn" type="button" aria-pressed="false" title="Measure metric distance between two points">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>
+              Measure
+            </button>
+            <button class="pc-measure-btn" id="pcCropBtn" type="button" aria-pressed="false" title="Drag a box to remove points (e.g. the roof)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h12v12H4z"/><path d="M8 4h12v12"/></svg>
+              Crop
+            </button>
+            <button class="pc-measure-btn" id="pcResetBtn" type="button" hidden title="Restore the full point cloud">Reset</button>
+            <span class="pc-measure-chip" id="pcMeasureChip" hidden></span>
+          </div>
+          <span class="pointcloud-name" id="pointcloudName">Point Cloud 1</span>
+        </div>
+        <div class="pc-layout">
+          <div class="pointcloud-viewer" id="pointcloudViewer">
+            <canvas id="pointcloudCanvas" aria-label="Interactive point cloud viewer"></canvas>
+            <button class="pointcloud-arrow prev" id="pointcloudPrev" type="button" aria-label="Previous point cloud">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="pointcloud-arrow next" id="pointcloudNext" type="button" aria-label="Next point cloud">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <div class="pointcloud-status" id="pointcloudStatus">Loading point cloud…</div>
+            <div class="pc-crop-rect" id="pcCropRect" hidden></div>
+          </div>
+          <aside class="pc-context" aria-label="Inputs for the active point cloud">
+            <div class="pc-ctx-head">
+              <span class="pc-ctx-title" id="pcCtxTitle">Inputs</span>
+              <span class="pc-ctx-tag" id="pcCtxTag"></span>
+            </div>
+            <div class="pc-ctx-grid" id="pcCtxGrid"></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DATASET ===================== -->
+  <section class="section" id="dataset">
+    <div class="container">
+      <h2 class="section-title reveal">OmniScene Dataset</h2>
+      <p class="section-sub reveal">A large-scale synthetic dataset for multi-view metric depth with heterogeneous cameras, released openly on Hugging Face.</p>
+
+      <div class="ds-stats reveal">
+        <div class="ds-stat"><span class="ds-num">103</span><span class="ds-label">complex scenes</span></div>
+        <div class="ds-stat"><span class="ds-num">564</span><span class="ds-label">motion sequences</span></div>
+        <div class="ds-stat"><span class="ds-num">266K</span><span class="ds-label">six-view frames</span></div>
+        <div class="ds-stat"><span class="ds-num">1.7M+</span><span class="ds-label">calibrated images</span></div>
       </div>
 
+      <figure class="ds-figure reveal">
+        <img src="assets/images/omniscene_overview.png" alt="OmniScene scene categories rendered from the six-camera rig: apartment, bazaar, gym, museum, office, palace, parking, railway" loading="lazy" />
+        <figcaption>Eight of the scene categories, each rendered from the calibrated six-camera rig: four 180&deg; fisheye and two pinhole views, fully synchronized.</figcaption>
+      </figure>
+
+      <p class="ds-copy reveal">
+        Scenes span residential, commercial, industrial, urban, and sci-fi environments built from
+        professionally authored Kujiale and Unreal Engine assets. Every frame carries dense, noise-free
+        metric ground truth: pixel-accurate z-depth, validity masks, sky indicators, and per-frame
+        OpenCV-convention intrinsics and extrinsics. Validation is drawn from the training scenes,
+        while the test set is held out on fully disjoint scenes for evaluation on unseen environments.
+      </p>
+      <a class="pill primary reveal" href="https://huggingface.co/datasets/henryzhou998/OmniScene/tree/main">&#129303; Download on Hugging Face</a>
+    </div>
+  </section>
+
+  <!-- ===================== VISION-ACTION ===================== -->
+  <section class="section" id="vla">
+    <div class="container">
+      <h2 class="section-title reveal">Application in Vision-Action Model</h2>
+      <p class="section-sub reveal">X-Lens as a geometry-aware visual encoder for multi-view robotic manipulation.</p>
+
       <div class="vla-showcase reveal">
-        <h3 class="compare-title">Vision-Action Demo</h3>
-        <p class="vla-copy">Depth estimation integrated into a Vision-Action model.</p>
         <div class="vla-grid">
           <div class="vla-video">
             <video src="assets/videos/VLA-1.mp4" autoplay muted loop playsinline preload="metadata"></video>
@@ -339,6 +348,7 @@
             <span>Speed x1</span>
           </div>
         </div>
+        <p class="coming-soon reveal">SLAM and loco-manipulation applications: <span class="mono">coming soon</span>.</p>
       </div>
     </div>
   </section>
@@ -346,24 +356,23 @@
   <!-- ===================== CITATION ===================== -->
   <section class="section" id="citation">
     <div class="container narrow">
-      <div class="kicker reveal">Citation</div>
-      <h2 class="section-title reveal">BibTeX</h2>
+      <h2 class="section-title reveal">Citation</h2>
+      <p class="section-sub reveal">If X-Lens is useful in your research, please cite our paper.</p>
       <div class="bibtex reveal">
         <button class="copy-btn" id="copyBib">Copy</button>
-        <pre id="bibText">@inproceedings{xlens2026,
-  title     = {X-Lens: Real-Time Metric Depth Estimation
-               with Heterogeneous Cameras},
-  author    = {Jia, Lin and Vance, Aria and Mori, Kenji and
-               Renn, Sofia and Lu, Wei and Park, Elena},
-  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
-  year      = {2026},
+        <pre id="bibText">@article{zhou2026xlens,
+  title   = {X-Lens: Real-Time Metric Depth Estimation
+             with Heterogeneous Cameras},
+  author  = {Zhou, Heng and Liu, Shuhong and He, Yonghao and
+             Zhang, Bohao and Fu, Fa and Hou, Chenhui and
+             Hou, Xianbao and Han, Lijun and Sui, Wei},
+  journal = {arXiv preprint},
+  year    = {2026},
 }</pre>
       </div>
       <div class="ack reveal">
-        <h3>Acknowledgement</h3>
-        <p>We thank the Spatial Intelligence Lab for compute and the anonymous reviewers for
-          their feedback. This page is an original design mock; all names, numbers, and media
-          are placeholders.</p>
+        <h3>Correspondence</h3>
+        <p><span class="mono">wei.sui@d-robotics.cc</span></p>
       </div>
     </div>
   </section>
@@ -373,12 +382,12 @@
 <footer class="footer">
   <div class="container footer-inner">
     <span class="brand"><span class="brand-mark">◈</span> X-Lens</span>
-    <span class="footer-copy">© 2026 X-Lens. Design mock — all content placeholder.</span>
+    <span class="footer-copy">© 2026 D-Robotics · X-Lens</span>
     <a href="#top" class="to-top">Back to top ↑</a>
   </div>
 </footer>
 
-<script src="script.js"></script>
-<script type="module" src="pointcloud-viewer.js"></script>
+<script src="script.js?v=12"></script>
+<script type="module" src="pointcloud-viewer.js?v=12"></script>
 </body>
 </html>

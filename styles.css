@@ -296,3 +296,78 @@ figcaption{color:var(--muted);font-size:.9rem;margin-top:12px;text-align:center}
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
 }
+
+/* ===== section hierarchy: big section name + small subtitle ===== */
+.section-sub{font-size:1.05rem;color:var(--muted);margin:-14px 0 34px;letter-spacing:.2px;max-width:760px}
+
+/* ===== abstract: DA3-style clean reading block ===== */
+.abstract-body p{font-size:1.04rem;line-height:1.9;text-align:justify;max-width:820px;margin-bottom:18px}
+.abstract-body p strong{color:var(--text)}
+
+/* ===== vision-action ===== */
+.coming-soon{margin-top:24px;color:var(--muted);font-size:.98rem}
+.coming-soon .mono{color:var(--v2)}
+
+/* ===== big section names carry the brand gradient (the purple look) ===== */
+.section-title{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  width:fit-content}
+.section-title::after{content:'';display:block;width:56px;height:3px;border-radius:2px;background:var(--grad);
+  margin-top:10px;opacity:.85}
+
+/* ===== dataset section ===== */
+.ds-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 30px}
+.ds-stat{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:18px 20px}
+.ds-num{display:block;font-family:'JetBrains Mono',monospace;font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ds-label{display:block;margin-top:4px;font-size:.88rem;color:var(--muted)}
+.ds-figure img{width:100%;height:auto;border-radius:var(--r);border:1px solid var(--line)}
+.ds-figure figcaption{margin-top:10px;font-size:.88rem;color:var(--muted)}
+.ds-copy{max-width:820px;margin:26px 0 22px}
+@media(max-width:768px){.ds-stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== metric measure tool ===== */
+.pc-measure-ui{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pc-measure-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;
+  border:1px solid var(--line);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .25s var(--ease)}
+.pc-measure-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.pc-measure-btn:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.pc-measure-btn.active{background:var(--grad);border-color:transparent;color:#fff}
+.pc-measure-chip{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--v2);
+  border:1px solid var(--line);border-radius:8px;padding:5px 12px;background:var(--panel)}
+
+/* ===== box-select crop ===== */
+.pc-crop-rect{position:absolute;border:1.5px dashed var(--v2);background:rgba(217,70,239,.12);
+  z-index:5;pointer-events:none;border-radius:4px}
+
+/* ===== interactive demo: full-width viewer + film-strip inputs below ===== */
+.pc-layout{display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.pc-context{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:14px 16px;max-height:none}
+.pc-ctx-head{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
+.pc-ctx-title{font-weight:700;font-size:.92rem}
+.pc-ctx-tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--v2)}
+.pc-ctx-grid{display:flex;gap:10px}
+.pc-ctx-grid img{flex:1 1 0;min-width:0;width:100%;height:auto;align-self:flex-start;
+  border-radius:8px;border:1px solid var(--line);display:block}
+@media(max-width:768px){.pc-ctx-grid{flex-wrap:wrap}.pc-ctx-grid img{flex:1 1 44%}}
+
+/* ===== company logo in nav ===== */
+.nav-logo{height:24px;width:auto;display:block;margin-left:auto;margin-right:14px;opacity:.92;transition:opacity .25s}
+.nav-logo:hover{opacity:1}
+@media(max-width:900px){.nav-logo{display:none}}
+
+/* affil footnotes on their own line */
+.affil-notes{margin-top:-6px}
+
+/* 5 scene thumbs centered under the hero video */
+.video-switcher{display:flex;flex-wrap:wrap;justify-content:center}
+.video-switcher button{flex:0 1 172px}
+
+/* all section headers centered */
+.section-title{margin-left:auto;margin-right:auto;text-align:center}
+.section-title::after{margin-left:auto;margin-right:auto}
+.section-sub{text-align:center;margin-left:auto;margin-right:auto}
+
+/* dataset copy + HF button centered */
+.ds-copy{text-align:center;margin-left:auto;margin-right:auto}
+#dataset .pill{display:table;margin-left:auto;margin-right:auto}
