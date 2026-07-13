@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=12" />
+<link rel="stylesheet" href="styles.css?v=17" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 </head>
 <body>
@@ -29,6 +29,7 @@
     <nav class="nav-links" aria-label="Primary">
       <a href="#overview">Overview</a>
       <a href="#abstract">Abstract</a>
+      <a href="#results">Results</a>
       <a href="#dataset">Dataset</a>
       <a href="#comparison">Comparison</a>
       <a href="#interactive">Demo</a>
@@ -90,7 +91,6 @@
             class="hero-video"
             id="heroVideo"
             src="assets/videos/home000.mp4"
-            autoplay
             muted
             loop
             playsinline
@@ -165,11 +165,59 @@
     </div>
   </section>
 
+  <!-- ===================== QUANTITATIVE RADARS ===================== -->
+  <section class="section radar-section" id="results">
+    <div class="container">
+      <h2 class="section-title reveal">Quantitative Results</h2>
+      <p class="section-sub reveal">A balanced view of accuracy, efficiency, and real-time performance across three benchmarks.</p>
+
+      <div class="radar-grid">
+        <article class="radar-card reveal" data-radar="KITTI360">
+          <div class="radar-card-head">
+            <div>
+              <span class="radar-eyebrow">Single-view</span>
+              <h3>KITTI360</h3>
+            </div>
+            <span class="radar-view-count"><strong>1</strong> view</span>
+          </div>
+          <div class="radar-chart" role="img" aria-label="KITTI360 normalized benchmark radar chart"></div>
+          <div class="radar-legend" aria-label="KITTI360 methods"></div>
+        </article>
+
+        <article class="radar-card reveal" data-radar="ETH3D">
+          <div class="radar-card-head">
+            <div>
+              <span class="radar-eyebrow">Multi-view</span>
+              <h3>ETH3D</h3>
+            </div>
+            <span class="radar-view-count"><strong>2</strong> views</span>
+          </div>
+          <div class="radar-chart" role="img" aria-label="ETH3D normalized benchmark radar chart"></div>
+          <div class="radar-legend" aria-label="ETH3D methods"></div>
+        </article>
+
+        <article class="radar-card reveal radar-card-featured" data-radar="OmniScene-Full">
+          <div class="radar-card-head">
+            <div>
+              <span class="radar-eyebrow">Heterogeneous</span>
+              <h3>OmniScene-Full</h3>
+            </div>
+            <span class="radar-view-count"><strong>6</strong> views</span>
+          </div>
+          <div class="radar-chart" role="img" aria-label="OmniScene-Full normalized benchmark radar chart"></div>
+          <div class="radar-legend" aria-label="OmniScene-Full methods"></div>
+        </article>
+      </div>
+
+      <p class="radar-note reveal"><span>How to read</span> Each axis is normalized relative to the best result in its table; farther from the center is better. Hover a model line or tap its legend to isolate it.</p>
+    </div>
+  </section>
+
 
   <!-- ===================== COMPARISON ===================== -->
   <section class="section" id="comparison">
     <div class="container">
-      <h2 class="section-title reveal">Comparison</h2>
+      <h2 class="section-title reveal">Qualitative Comparison</h2>
       <p class="section-sub reveal">State of the art across the board. Qualitative comparisons on two real captures: a surround rig with four fisheye cameras, and a rig with six pinhole cameras.</p>
 
       <h3 class="compare-title reveal">Fisheye · Real 4-camera rig</h3>
@@ -340,11 +388,11 @@
       <div class="vla-showcase reveal">
         <div class="vla-grid">
           <div class="vla-video">
-            <video src="assets/videos/VLA-1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            <video src="assets/videos/VLA-1.mp4" muted loop playsinline preload="metadata"></video>
             <span>Speed x1</span>
           </div>
           <div class="vla-video">
-            <video src="assets/videos/VLA-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            <video src="assets/videos/VLA-2.mp4" muted loop playsinline preload="metadata"></video>
             <span>Speed x1</span>
           </div>
         </div>
@@ -355,17 +403,15 @@
 
   <!-- ===================== CITATION ===================== -->
   <section class="section" id="citation">
-    <div class="container narrow">
+    <div class="container narrow citation-container">
       <h2 class="section-title reveal">Citation</h2>
       <p class="section-sub reveal">If X-Lens is useful in your research, please cite our paper.</p>
       <div class="bibtex reveal">
         <button class="copy-btn" id="copyBib">Copy</button>
         <pre id="bibText">@article{zhou2026xlens,
-  title   = {X-Lens: Real-Time Metric Depth Estimation
-             with Heterogeneous Cameras},
-  author  = {Zhou, Heng and Liu, Shuhong and He, Yonghao and
-             Zhang, Bohao and Fu, Fa and Hou, Chenhui and
-             Hou, Xianbao and Han, Lijun and Sui, Wei},
+  title   = {X-Lens: Real-Time Metric Depth Estimation with Heterogeneous Cameras},
+  author  = {Zhou, Heng and Liu, Shuhong and He, Yonghao and Zhang, Bohao and Fu, Fa and
+             Hou, Chenhui and Hou, Xianbao and Han, Lijun and Sui, Wei},
   journal = {arXiv preprint},
   year    = {2026},
 }</pre>
@@ -387,7 +433,7 @@
   </div>
 </footer>
 
-<script src="script.js?v=12"></script>
-<script type="module" src="pointcloud-viewer.js?v=12"></script>
+<script src="script.js?v=14"></script>
+<script type="module" src="pointcloud-viewer.js?v=14"></script>
 </body>
 </html>

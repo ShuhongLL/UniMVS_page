@@ -105,11 +105,30 @@ function initPointCloudViewer() {
 
   let activeIndex = 0;
   let activePoints = null;
+  let renderFrame = 0;
+  let viewerVisible = false;
+
+  const requestRender = () => {
+    if (renderFrame || !viewerVisible || document.hidden) return;
+    renderFrame = requestAnimationFrame(render);
+  };
+
+  function render() {
+    renderFrame = 0;
+    if (!viewerVisible || document.hidden) return;
+    const settling = controls.update();
+    renderer.render(scene, camera);
+    if (settling) requestRender();
+  }
+
+  controls.addEventListener("change", requestRender);
+
   const resize = () => {
     const { width, height } = viewer.getBoundingClientRect();
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    requestRender();
   };
 
   const ro = new ResizeObserver(resize);
@@ -129,6 +148,7 @@ function initPointCloudViewer() {
       if (activePoints) {
         scene.remove(activePoints);
         activePoints.geometry.dispose();
+        activePoints.material.dispose();
       }
 
       const material = new THREE.PointsMaterial({
@@ -145,6 +165,7 @@ function initPointCloudViewer() {
       frameGeometry(working, camera, controls);
       if (resetBtnRef) resetBtnRef.hidden = true;
       setStatus("");
+      requestRender();
     } catch (error) {
       console.error(error);
       setStatus("Point cloud failed to load");
@@ -351,14 +372,32 @@ function initPointCloudViewer() {
     if (x1 - x0 > 8 && y1 - y0 > 8) applyCrop(x0, y0, x1, y1);
   });
 
-  const animate = () => {
-    controls.update();
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  };
+  const renderObserver = new IntersectionObserver(([entry]) => {
+    viewerVisible = entry.isIntersecting;
+    if (viewerVisible) requestRender();
+    else if (renderFrame) {
+      cancelAnimationFrame(renderFrame);
+      renderFrame = 0;
+    }
+  }, { threshold: 0.01 });
+  renderObserver.observe(viewer);
 
-  animate();
-  showCloud(0);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && renderFrame) {
+      cancelAnimationFrame(renderFrame);
+      renderFrame = 0;
+    } else {
+      requestRender();
+    }
+  });
+
+  // Avoid downloading and parsing a large cloud until the viewer is nearby.
+  const loadObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+    showCloud(0);
+  }, { rootMargin: "600px 0px", threshold: 0 });
+  loadObserver.observe(viewer);
 }
 
 function updateContext(cloud) {
@@ -377,10 +416,9 @@ function updateContext(cloud) {
 }
 
 async function loadGeometry(cloud) {
-  if (loadGeometry.cache?.has(cloud.url)) {
-    return loadGeometry.cache.get(cloud.url);
+  if (loadGeometry.cache?.url === cloud.url) {
+    return loadGeometry.cache.geometry;
   }
-  loadGeometry.cache ||= new Map();
 
   const response = await fetch(cloud.url);
   if (!response.ok) {
@@ -388,7 +426,8 @@ async function loadGeometry(cloud) {
   }
   const buffer = await response.arrayBuffer();
   const geometry = parseBinaryPly(buffer);
-  loadGeometry.cache.set(cloud.url, geometry);
+  loadGeometry.cache?.geometry.dispose();
+  loadGeometry.cache = { url: cloud.url, geometry };
   return geometry;
 }
 

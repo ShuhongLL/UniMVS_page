@@ -154,7 +154,7 @@ em{color:var(--muted);font-style:italic}
 .video-switcher span{display:block;padding:7px 6px 8px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* ---------- sections ---------- */
-.section{padding:96px 0;position:relative}
+.section{padding:48px 0;position:relative}
 .kicker{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
   color:var(--v2);margin-bottom:16px;padding-left:2px}
 .kicker::before{content:'';display:inline-block;width:28px;height:2px;background:var(--grad);
@@ -248,6 +248,7 @@ figcaption{color:var(--muted);font-size:.9rem;margin-top:12px;text-align:center}
 /* ---------- bibtex ---------- */
 .bibtex{position:relative;border:1px solid var(--line);border-radius:var(--r);background:var(--panel-solid);
   margin-top:24px;overflow:hidden;box-shadow:var(--shadow)}
+.citation-container{max-width:1100px}
 .bibtex pre{font-family:'JetBrains Mono',monospace;font-size:.86rem;color:#cdbff0;padding:26px;overflow-x:auto;line-height:1.7}
 .copy-btn{position:absolute;top:14px;right:14px;z-index:2;padding:7px 16px;border-radius:8px;border:1px solid var(--line);
   background:rgba(28,18,46,.8);color:var(--text);font-weight:600;font-size:.82rem;cursor:pointer;transition:all .25s}
@@ -280,7 +281,7 @@ figcaption{color:var(--muted);font-size:.9rem;margin-top:12px;text-align:center}
   .pointcloud-arrow{width:46px;height:46px}
   .vla-grid{grid-template-columns:1fr}
   .hero{padding:130px 0 60px}
-  .section{padding:70px 0}
+  .section{padding:35px 0}
   .br-d{display:none}
 }
 @media(max-width:480px){
@@ -371,3 +372,63 @@ figcaption{color:var(--muted);font-size:.9rem;margin-top:12px;text-align:center}
 /* dataset copy + HF button centered */
 .ds-copy{text-align:center;margin-left:auto;margin-right:auto}
 #dataset .pill{display:table;margin-left:auto;margin-right:auto}
+
+/* ===== quantitative radar maps ===== */
+.radar-section{isolation:isolate;overflow:hidden}
+.radar-section::before{content:'';position:absolute;left:50%;top:48%;width:980px;height:680px;z-index:0;
+  transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(ellipse,rgba(139,92,246,.13),rgba(217,70,239,.045) 42%,transparent 72%)}
+.radar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;align-items:stretch;padding:12px;
+  border:1px solid rgba(168,130,255,.22);border-radius:24px;overflow:hidden;
+  background:linear-gradient(145deg,rgba(30,19,50,.66),rgba(14,9,25,.5));
+  box-shadow:0 28px 80px -42px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.035);
+  backdrop-filter:blur(10px)}
+.radar-card{position:relative;min-width:0;padding:18px 16px 15px;background:transparent}
+.radar-card+.radar-card{border-left:1px solid rgba(168,130,255,.14)}
+.radar-card-head{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 2px}
+.radar-card-head h3{font-size:1.1rem;line-height:1.25;letter-spacing:-.25px}
+.radar-eyebrow{display:block;margin-bottom:4px;font:500 .62rem/1.2 'JetBrains Mono',monospace;
+  color:var(--v2);letter-spacing:1.3px;text-transform:uppercase}
+.radar-view-count{flex:none;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(10,6,18,.42);
+  font:500 .64rem/1 'JetBrains Mono',monospace;color:var(--faint)}
+.radar-view-count strong{color:var(--text);font-weight:600}
+.radar-chart{position:relative;z-index:1;margin:0 -2px}
+.radar-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.radar-ring{fill:none;stroke:rgba(168,130,255,.13);stroke-width:.8;stroke-dasharray:2.5 3.5}
+.radar-ring-outer{stroke:rgba(168,130,255,.28);stroke-width:1.15;stroke-dasharray:none}
+.radar-spoke{stroke:rgba(168,130,255,.15);stroke-width:.8}
+.radar-axis-label{fill:#aaa0c4;font:600 8.2px 'Sora',system-ui,sans-serif;letter-spacing:-.12px}
+.radar-area{opacity:.055;transition:opacity .24s var(--ease);pointer-events:none}
+.radar-outline{fill:none;stroke-width:1.25;stroke-linejoin:round;opacity:.62;pointer-events:none;
+  transition:opacity .24s var(--ease),stroke-width .24s var(--ease)}
+.radar-point{stroke:#150d24;stroke-width:1;opacity:.78;pointer-events:none;transition:opacity .24s var(--ease)}
+.radar-hit{fill:none;stroke:transparent;stroke-width:12;stroke-linejoin:round;pointer-events:stroke;cursor:pointer}
+.radar-series-ours .radar-area{opacity:.17}
+.radar-series-ours .radar-outline{stroke-width:2.25;opacity:1}
+.radar-series-ours .radar-point{opacity:1;stroke:#fff;stroke-width:.8}
+.radar-series.is-muted{opacity:.08}
+.radar-series.is-active .radar-area{opacity:.22}
+.radar-series.is-active .radar-outline{opacity:1;stroke-width:2.5}
+.radar-series.is-active .radar-point{opacity:1}
+.radar-series{transition:opacity .24s var(--ease)}
+.radar-legend{position:relative;z-index:2;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 8px;min-height:50px;padding-top:2px}
+.radar-legend-item{display:inline-flex;align-items:center;gap:5px;padding:4px 6px;border:0;border-radius:6px;background:transparent;
+  color:var(--muted);font:500 .61rem/1.1 'JetBrains Mono',monospace;cursor:pointer;transition:color .2s,background .2s,opacity .2s}
+.radar-legend-item span{width:13px;height:2px;border-radius:2px;background:var(--series-color);box-shadow:0 0 7px color-mix(in srgb,var(--series-color) 65%,transparent)}
+.radar-legend-item:hover,.radar-legend-item:focus-visible,.radar-legend-item.is-active{color:var(--text);background:rgba(255,255,255,.055);outline:none}
+.radar-legend-item.ours{color:#f7c4de;font-weight:700}
+.radar-legend-item.ours span{height:3px;background:linear-gradient(90deg,var(--v2),var(--v3))}
+.radar-legend-item.is-muted{opacity:.25}
+.radar-note{max-width:800px;margin:26px auto 0;text-align:center;font-size:.78rem;line-height:1.7}
+.radar-note span{display:inline-block;margin-right:8px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;
+  color:var(--v2);font:600 .65rem/1.2 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px}
+@media(max-width:1040px){
+  .radar-grid{grid-template-columns:1fr;padding:10px 18px}
+  .radar-card+.radar-card{border-left:0;border-top:1px solid rgba(168,130,255,.14)}
+  .radar-card{max-width:540px;width:100%;justify-self:center;padding:20px 24px}
+}
+@media(max-width:700px){
+  .radar-grid{padding:8px 12px}
+  .radar-card{max-width:430px;padding:20px 10px 17px}
+  .radar-chart{max-width:390px;margin:0 auto}
+}
